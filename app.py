@@ -16,7 +16,7 @@ def index():
 @app.get('/movies')
 def list_all_movies():
     # TODO: Feature 1
-    return render_template('list_all_movies.html', list_movies_active=True)
+    return render_template('list_all_movies.html', list_movies_active=True, movies=movie_repository.get_all_movies())
 
 
 @app.get('/movies/new')
@@ -46,16 +46,3 @@ def get_single_movie(movie_id: int):
 @app.get('/movies/<int:movie_id>/edit')
 def get_edit_movies_page(movie_id: int):
     return render_template('edit_movies_form.html')
-
-
-@app.post('/movies/<int:movie_id>')
-def update_movie(movie_id: int):
-    # TODO: Feature 5
-    # After updating the movie in the database, we redirect back to that single movie page
-    return redirect(f'/movies/{movie_id}')
-
-
-@app.post('/movies/<int:movie_id>/delete')
-def delete_movie(movie_id: int):
-    # TODO: Feature 6
-    pass
