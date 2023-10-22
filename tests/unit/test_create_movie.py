@@ -1,20 +1,24 @@
 # TODO: Feature 2
 import pytest
-from app import create_movie
+from app import app
 
 def test_create_movie_valid_data():
-    movie_name = 'Movie'
-    director = 'Director'
-    rating = 4
+    with app.test_client() as client:
+        response = client.post('/movies', data={
+            'movieName': 'Test Movie',
+            'director': 'Test Director',
+            'rating': 4
+        })
 
-    result = create_movie(movie_name, director, rating)
-    assert result == 'Success'
+        assert response.status_code == 302
 
 
 def test_create_movie_invalid_data():
-        movie_name = ''
-        director = 'director'
-        rating = 6
+    with app.test_client() as client:
+        response = client.post('/movies', data={
+            'movieName': '',
+            'director': 'director',
+            'rating': 6
+        })
 
-        result = create_movie(movie_name, director, rating)
-        assert result == 'Failure'
+        assert response.status_code == 200
