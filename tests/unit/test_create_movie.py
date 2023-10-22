@@ -1,5 +1,4 @@
 # TODO: Feature 2
-import pytest
 from app import app
 
 def test_create_movie_valid_data():
