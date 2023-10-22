@@ -9,8 +9,7 @@ def test_create_movie_valid_data():
             'rating': 4
         })
 
-        assert response.status_code == 302
-
+        assert response.status_code == 302 # successfully redirected
 
 def test_create_movie_invalid_data():
     with app.test_client() as client:
@@ -20,4 +19,5 @@ def test_create_movie_invalid_data():
             'rating': 6
         })
 
-        assert response.status_code == 200
+        assert response.status_code == 400
+        assert b'Invalid input' in response.data

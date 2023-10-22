@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request
+from flask import Flask, redirect, render_template, request, make_response
 
 from src.repositories.movie_repository import get_movie_repository
 
@@ -35,7 +35,8 @@ def create_movie():
 
     # validating data
     if not movie_name or not director or rating not in range(1,6):
-        return "Invalid input."
+        response = make_response("Invalid input", 400)
+        return response
     
     # saving movie rating to movie repo
     movie_repository.create_movie(movie_name, director, rating)
