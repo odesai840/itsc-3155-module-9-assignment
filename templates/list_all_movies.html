@@ -6,7 +6,7 @@
 <h1 class="mb-5">All Movies</h1>
 <p class="mb-3">See our list of movie ratings below</p>
 <!-- TODO: Feature 1 -->
-<table class="table">
+<table class="table" method="GET" action="/movies">
     <thead>
         <tr>
             <th>Movie Name</th>
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for id, movie in movies %}
+        {% for id, movie in movies.items() %}
         <tr>
             <td>{{ movie.title }}</td>
             <td>{{ movie.director }}</td>

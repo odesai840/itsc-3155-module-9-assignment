@@ -6,10 +6,13 @@ def test_create_movie(test_app: FlaskClient):
     response = test_app.get('/movies')
     assert response.status_code == 200
 
-    # Send a POST request with test data
-    response = test_app.post('/movies', data={
-        'title': 'SomeTitle1',
-        'director': 'SomeDirector1',
-        'rating': 5
-    })
-    assert response.status_code == 302
+    response = test_app.post('/movies', data = {
+        'movieName': 'TestTitle',
+        'director': 'TestDirector',
+        'rating': '5'
+    }, follow_redirects=True)
+    assert response.status_code == 200
+
+    assert b'TestTitle' in response.data
+    assert b'TestDirector' in response.data
+    assert b'5' in response.data
