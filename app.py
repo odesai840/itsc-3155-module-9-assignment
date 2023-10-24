@@ -16,7 +16,7 @@ def index():
 @app.get('/movies')
 def list_all_movies():
     # TODO: Feature 1
-    return render_template('list_all_movies.html', list_movies_active=True)
+    return render_template('list_all_movies.html', list_movies_active=True, movies=movies)
 
 
 @app.get('/movies/new')
@@ -29,9 +29,9 @@ def create_movie():
     # TODO: Feature 2
 
     # getting data from form
-    movie_name = request.form['movieName']
-    director = request.form['director']
-    rating = int(request.form['rating'])
+    movie_name = request.form.get('movieName')
+    director = request.form.get('director')
+    rating = request.form.get('rating', type=int)
 
     # validating data
     if not movie_name or not director or rating not in range(1,6):
