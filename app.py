@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, request, make_response
 
 from src.repositories.movie_repository import get_movie_repository
 
@@ -27,6 +27,20 @@ def create_movies_form():
 @app.post('/movies')
 def create_movie():
     # TODO: Feature 2
+
+    # getting data from form
+    movie_name = request.form.get('movieName')
+    director = request.form.get('director')
+    rating = request.form.get('rating', type=int)
+
+    # validating data
+    if not movie_name or not director or rating not in range(1,6):
+        response = make_response("Invalid input", 400)
+        return response
+    
+    # saving movie rating to movie repo
+    movie_repository.create_movie(movie_name, director, rating)
+
     # After creating the movie in the database, we redirect to the list all movies page
     return redirect('/movies')
 
