@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request
+from flask import Flask, redirect, render_template, request, make_response
 
 from src.repositories.movie_repository import get_movie_repository
 
@@ -16,7 +16,7 @@ def index():
 @app.get('/movies')
 def list_all_movies():
     # TODO: Feature 1
-    return render_template('list_all_movies.html', list_movies_active=True)
+    return render_template('list_all_movies.html', list_movies_active=True, movies=movie_repository.get_all_movies())
 
 
 @app.get('/movies/new')
@@ -27,6 +27,20 @@ def create_movies_form():
 @app.post('/movies')
 def create_movie():
     # TODO: Feature 2
+
+    # getting data from form
+    movie_name = request.form.get('movieName')
+    director = request.form.get('director')
+    rating = request.form.get('rating', type=int)
+
+    # validating data
+    if not movie_name or not director or rating not in range(1,6):
+        response = make_response("Invalid input", 400)
+        return response
+    
+    # saving movie rating to movie repo
+    movie_repository.create_movie(movie_name, director, rating)
+
     # After creating the movie in the database, we redirect to the list all movies page
     return redirect('/movies')
 
@@ -47,16 +61,3 @@ def get_single_movie(movie_id: int):
 @app.get('/movies/<int:movie_id>/edit')
 def get_edit_movies_page(movie_id: int):
     return render_template('edit_movies_form.html')
-
-
-@app.post('/movies/<int:movie_id>')
-def update_movie(movie_id: int):
-    # TODO: Feature 5
-    # After updating the movie in the database, we redirect back to that single movie page
-    return redirect(f'/movies/{movie_id}')
-
-
-@app.post('/movies/<int:movie_id>/delete')
-def delete_movie(movie_id: int):
-    # TODO: Feature 6
-    pass
