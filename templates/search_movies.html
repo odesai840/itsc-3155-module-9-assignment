@@ -16,8 +16,11 @@
     </div>
   </div>
 </form>
-<div>
-  {{ movie.title }}
-  {{ movie.rating }}
+{% if movie == None %}
+{% else %}
+<div class="container">
+  <p>{{ movie.title }}</p>
+  <p>Rating: {{ movie.rating }}</p>
 </div>
+{% endif %}
 {% endblock %}
