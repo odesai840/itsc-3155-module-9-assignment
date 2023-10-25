@@ -12,10 +12,10 @@ def test_get_movie_by_title():
     movies.create_movie("Title 4", "Director", 4)
 
     # Check that get_movie_by_title returns the correct movies
-    assert movies.get_movie_by_title("Title 1").movie_id == 1
-    assert movies.get_movie_by_title("Title 2").movie_id == 2
-    assert movies.get_movie_by_title("Title 3").movie_id == 3
-    assert movies.get_movie_by_title("Title 4").movie_id == 4
+    assert movies.get_movie_by_title("Title 1").title == "Title 1"
+    assert movies.get_movie_by_title("Title 2").title == "Title 2"
+    assert movies.get_movie_by_title("Title 3").title == "Title 3"
+    assert movies.get_movie_by_title("Title 4").title == "Title 4"
 
     # Check that get_movie_by_title returns None when movie is not found
     assert movies.get_movie_by_title("Fake movie") == None
