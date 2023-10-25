@@ -23,4 +23,4 @@ def test_search_movies_page(test_app: FlaskClient):
 
     search = test_app.get('/movies/search?search=Test+Movie+Title', follow_redirects=True)
     assert search.status_code == 200
-    assert "Test Movie Title" in search.data.decode()
+    assert b"Test Movie Title" in search.data
