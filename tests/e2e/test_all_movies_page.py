@@ -1,6 +1,5 @@
 # TODO: Feature 1
 from flask.testing import FlaskClient
-from src.repositories import movie_repository
 
 def test_create_movie(test_app: FlaskClient):
     # send a GET request to the '/movies' route
