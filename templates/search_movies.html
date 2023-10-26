@@ -6,4 +6,23 @@
 <h1 class="mb-5">Search Movie Ratings</h1>
 <p class="mb-3">Search for a movie rating below</p>
 <!-- TODO: Feature 3 -->
+<form class="form-inline container" method="GET">
+  <div class="row justify-content-md-center">
+    <div class="col-lg">
+      <input type="search" class="form-control" placeholder="Search by title" name="search">
+    </div>
+    <div class="col-sm">
+      <button class="btn btn-secondary" type="submit">Search</button>
+    </div>
+  </div>
+</form>
+{% if movie == None %}
+{% else %}
+<div class="card" style="margin-top: 10px;">
+  <div class="card-body">
+    <h4>{{ movie.title }}</h4>
+    <p><b>Rating:</b> {{ movie.rating }} / 5</p>
+  </div>
+</div>
+{% endif %}
 {% endblock %}
