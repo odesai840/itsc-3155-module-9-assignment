@@ -1,6 +1,7 @@
 # TODO: Feature 2
 from flask.testing import FlaskClient
 from src.repositories.movie_repository import get_movie_repository
+import pytest
 
 def tests_create_movie(test_app: FlaskClient):
     # ensuring page loads correctly
@@ -25,4 +26,4 @@ def tests_create_movie(test_app: FlaskClient):
     movies = movie_repo.get_all_movies().values()
     assert len(movies) == 1
     for movie in movies: 
-        assert movie.title == 'Random Movie'
+        assert movie.title == 'Random Movie'    
