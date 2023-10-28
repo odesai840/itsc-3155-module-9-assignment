@@ -58,9 +58,45 @@ def search_movies():
 @app.get('/movies/<int:movie_id>')
 def get_single_movie(movie_id: int):
     # TODO: Feature 4
-    return render_template('get_single_movie.html')
+    # Fetch the movie details from the repository using the movie_id
+    movie = movie_repository.get_movie_by_id(movie_id)
 
+    # Check if the movie exists
+    if not movie:
+        return "Movie not found", 404
+    
+    # Render the template and pass the movie details
+    return render_template('get_single_movie.html', movie=movie)
 
+@app.delete('/movies/<int:movie_id>')
+def delete_movie(movie_id: int):
+    # Fetch the movie repository instance
+    movie_repo = movie_repository.get_movie_repository()
+
+    # Attempt to delete the movie from the repository
+    try:
+        movie_repo.delete_movie(movie_id)
+    except ValueError:
+        return "Movie not found or could not be deleted", 404
+    
+    # Redirect back to the list of all movies
+    return redirect('/movies')
+
+# Fetch existing movie details and show edit form
 @app.get('/movies/<int:movie_id>/edit')
 def get_edit_movies_page(movie_id: int):
-    return render_template('edit_movies_form.html')
+
+    movie = movie_repository.get_movie_by_id(movie_id)
+    if not movie:
+        return "Movie not found", 404
+    return render_template('edit_movie_form.html', movie=movie)
+
+# Handle edit form submission
+@app.post('/movies/<int:movie_id>/edit')
+def post_edit_movies_page(movie_id: int):
+    updated_data = request.form
+    success = movie_repository.update_movie_by_id(movie_id, updated_data)
+    if not success:
+        return "Could not update movie", 400
+    return redirect(f'/movies/{movie_id}')
+
